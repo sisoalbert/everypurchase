@@ -1,24 +1,14 @@
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
 import React from "react";
 
-export default function Home() {
-  const { userId } = auth();
-
-  if (userId) {
-    redirect("/dashboard");
-  }
-
+export default function page() {
   return (
     <main className="bg-white-100 flex  justify-center items-center flex-col">
       <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-        Every Purchase, Every Time
+        We invest in the world’s potential
       </h1>
       <p className="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-        Here at Every Purchase, we focus on providing a seamless shopping
-        experience where every purchase matters. We believe that technology,
-        innovation, and customer satisfaction can unlock long-term value and
-        drive economic growth.
+        Here at Flowbite we focus on markets where technology, innovation, and
+        capital can unlock long-term value and drive economic growth.
       </p>
       <a
         href="#"
