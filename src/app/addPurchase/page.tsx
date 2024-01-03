@@ -1,5 +1,6 @@
 import AddPurchaseForm from "@/components/form";
 import { getXataClient } from "@/xata";
+import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -9,6 +10,7 @@ const schema = z.object({
   amount: z.number(),
   purchaseDate: z.date(),
   category: z.string(),
+  userId: z.string(),
 });
 
 const page: React.FC = () => {
@@ -19,11 +21,13 @@ const page: React.FC = () => {
     const date = formData.get("datetime");
     const category = formData.get("category");
     const purchaseDate = date ? new Date(date.toString()) : "";
+    const { userId } = auth();
     const validatedFormData = schema.parse({
       title,
       amount,
       purchaseDate,
       category,
+      userId,
     });
     const xataClient = getXataClient();
     await xataClient.db.purchases.create(validatedFormData);

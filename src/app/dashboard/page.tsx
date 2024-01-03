@@ -1,8 +1,11 @@
 import { getXataClient } from "@/xata";
+import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 const xata = getXataClient();
 
 export default async function page() {
+  const { userId } = auth();
+
   const page = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
     .getPaginated({
@@ -15,14 +18,12 @@ export default async function page() {
 
   const userPage = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
-    .filter({ userId: "hence academics" }) // Add this line to filter by userId
+    .filter({ userId }) // Add this line to filter by userId
     .getPaginated({
       pagination: {
         size: 15,
       },
     });
-
-  console.log(userPage.records.length);
 
   return (
     <main className="bg-white-100 flex justify-center    items-center flex-col ">
@@ -45,7 +46,7 @@ export default async function page() {
       </div>
 
       <h1 className="font-bold text-2xl">All your purchases</h1>
-      {page.records.map((record) => (
+      {userPage.records.map((record) => (
         <div className="bg-white-100 flex  	 flex-col" key={record.id}>
           <p>{record.title}</p>
           <p>R{record.amount}</p>
