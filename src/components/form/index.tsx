@@ -1,18 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function AddPurchaseForm({
-  formAction,
-}: {
-  formAction: (formData: FormData) => void;
-}) {
+interface categoriesProps {
+  id: string;
+  categoryName: string;
+}
+
+export default function AddPurchaseForm(
+  // categories: categoriesProps[],
+  {
+    formAction,
+  }: {
+    formAction: (formData: FormData) => void;
+  }
+) {
   const ref = React.useRef<HTMLFormElement>(null);
+  // const data = categories.categories;
+
+  const data = [
+    {
+      id: "1",
+      categoryName: "Food",
+    },
+    {
+      id: "2",
+      categoryName: "Drinks",
+    },
+    {
+      id: "3",
+      categoryName: "Clothes",
+    },
+    {
+      id: "4",
+      categoryName: "Electronics",
+    },
+    {
+      id: "5",
+      categoryName: "Travel",
+    },
+    {
+      id: "6",
+      categoryName: "Other",
+    },
+  ];
+
   return (
     <div>
       <form
         className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-md"
         ref={ref}
-        //   action={createPurchase}
         action={(formData) => {
           formAction(formData);
           ref.current?.reset();
@@ -81,9 +117,11 @@ export default function AddPurchaseForm({
             <option value="" disabled>
               Select a category
             </option>
-            <option value="food">Food</option>
-            <option value="clothing">Clothing</option>
-            <option value="entertainment">Entertainment</option>
+            {data.map((category) => (
+              <option key={category.id} value={category.categoryName}>
+                {category.categoryName}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mt-4">

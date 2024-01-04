@@ -1,4 +1,5 @@
 import AddPurchaseForm from "@/components/form";
+import { getCategories } from "@/lib/dataFetch";
 import { getXataClient } from "@/xata";
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
@@ -35,9 +36,41 @@ const page: React.FC = () => {
     redirect("/dashboard");
   }
 
+  // console.log("categories", getCategories());
+  // const data = getCategories();
+  const data = [
+    {
+      id: "1",
+      categoryName: "Food",
+    },
+    {
+      id: "2",
+      categoryName: "Drinks",
+    },
+    {
+      id: "3",
+      categoryName: "Clothes",
+    },
+    {
+      id: "4",
+      categoryName: "Electronics",
+    },
+    {
+      id: "5",
+      categoryName: "Travel",
+    },
+    {
+      id: "6",
+      categoryName: "Other",
+    },
+  ];
+
   return (
     <div className="container mx-auto mt-8">
-      <AddPurchaseForm formAction={createPurchase} />
+      <AddPurchaseForm
+        formAction={createPurchase}
+        // categories={data}
+      />
     </div>
   );
 };
