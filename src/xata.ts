@@ -14,7 +14,7 @@ const tables = [
       { name: "amount", type: "int", notNull: true, defaultValue: "0" },
       { name: "category", type: "string", notNull: true, defaultValue: "null" },
       { name: "purchaseDate", type: "datetime" },
-      { name: "userId", type: "string", unique: true },
+      { name: "userId", type: "string", notNull: true, defaultValue: "null" },
     ],
   },
   {
@@ -26,6 +26,8 @@ const tables = [
         notNull: true,
         defaultValue: "null",
       },
+      { name: "userId", type: "string", notNull: true, defaultValue: "null" },
+      { name: "moneyMovement", type: "string", defaultValue: "Out" },
     ],
   },
 ] as const;

@@ -9,7 +9,7 @@ export default async function page() {
 
   const userPage = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
-    .filter({ userId }) // Add this line to filter by userId
+    .filter({ userId: userId ?? undefined }) // Add this line to filter by userId
     .getPaginated({
       pagination: {
         size: 15,
