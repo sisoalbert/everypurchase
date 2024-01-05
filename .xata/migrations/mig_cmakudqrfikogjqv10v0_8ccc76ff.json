@@ -1,0 +1,18 @@
+{
+  "id": "mig_cmakudqrfikogjqv10v0",
+  "parentID": "mig_cmaimm2rfikogjqv1000",
+  "checksum": "1:8ccc76ffab66a7c603239e5c0de65fccab047b91f655a95f65715d49e6a4bc21",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "userId",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "null"
+        },
+        "table": "purchase_categories"
+      }
+    }
+  ]
+}

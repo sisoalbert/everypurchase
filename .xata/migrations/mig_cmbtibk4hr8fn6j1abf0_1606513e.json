@@ -1,0 +1,13 @@
+{
+  "id": "mig_cmbtibk4hr8fn6j1abf0",
+  "parentID": "mig_cmbti9cled2b3cq99lvg",
+  "checksum": "1:1606513ebe94b56c5e284b330e07b8fd00eac8e5da7a8a6a6ef6cb202f054228",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "amountm",
+        "table": "purchases"
+      }
+    }
+  ]
+}

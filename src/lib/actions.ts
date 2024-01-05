@@ -16,7 +16,6 @@ const schema = z.object({
 const xata = getXataClient();
 
 export async function createPurchase(formData: FormData) {
-  "use server";
   const title = formData.get("title");
   const amount = Number(formData.get("amount"));
   const date = formData.get("datetime");

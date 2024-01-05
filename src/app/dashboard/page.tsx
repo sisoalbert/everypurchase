@@ -37,9 +37,15 @@ export default async function page() {
           </Link>
         </div>
       </div>
-      <div className="container mx-auto mt-8">
-        <PurchasesTable purchases={userPage.records} />
-      </div>
+      {userPage.records.length === 0 ? (
+        <div className="bg-white-100 flex justify-center items-center flex-col">
+          <>No purchase yet</>
+        </div>
+      ) : (
+        <div className="container mx-auto mt-8">
+          <PurchasesTable purchases={userPage.records} />
+        </div>
+      )}
     </main>
   );
 }

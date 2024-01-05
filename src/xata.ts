@@ -11,10 +11,10 @@ const tables = [
     name: "purchases",
     columns: [
       { name: "title", type: "string", notNull: true, defaultValue: "item" },
-      { name: "amount", type: "int", notNull: true, defaultValue: "0" },
       { name: "category", type: "string", notNull: true, defaultValue: "null" },
       { name: "purchaseDate", type: "datetime" },
       { name: "userId", type: "string", notNull: true, defaultValue: "null" },
+      { name: "amount", type: "float", notNull: true, defaultValue: "0" },
     ],
   },
   {

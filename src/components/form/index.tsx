@@ -49,10 +49,11 @@ export default function AddPurchaseForm({
             Amount
           </label>
           <input
-            type="number"
+            type="text"
             id="amount"
             name="amount"
             placeholder="Enter amount"
+            pattern="[0-9]+(\.[0-9]+)?"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md"
             required
           />
