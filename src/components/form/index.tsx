@@ -1,48 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 interface categoriesProps {
   id: string;
   categoryName: string;
 }
 
-export default function AddPurchaseForm(
-  // categories: categoriesProps[],
-  {
-    formAction,
-  }: {
-    formAction: (formData: FormData) => void;
-  }
-) {
+export default function AddPurchaseForm({
+  categories,
+  formAction,
+}: {
+  categories: categoriesProps[];
+  formAction: (formData: FormData) => void;
+}) {
   const ref = React.useRef<HTMLFormElement>(null);
-  // const data = categories.categories;
-
-  const data = [
-    {
-      id: "1",
-      categoryName: "Food",
-    },
-    {
-      id: "2",
-      categoryName: "Drinks",
-    },
-    {
-      id: "3",
-      categoryName: "Clothes",
-    },
-    {
-      id: "4",
-      categoryName: "Electronics",
-    },
-    {
-      id: "5",
-      categoryName: "Travel",
-    },
-    {
-      id: "6",
-      categoryName: "Other",
-    },
-  ];
 
   return (
     <div>
@@ -117,7 +88,7 @@ export default function AddPurchaseForm(
             <option value="" disabled>
               Select a category
             </option>
-            {data.map((category) => (
+            {categories.map((category) => (
               <option key={category.id} value={category.categoryName}>
                 {category.categoryName}
               </option>
