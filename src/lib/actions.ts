@@ -43,10 +43,42 @@ export async function getOptionFromXata() {
     .select(["id", "categoryName", "moneyMovement"])
     .getPaginated({
       pagination: {
+        size: 25,
+      },
+    });
+
+  const data = JSON.parse(JSON.stringify(categories.records));
+  return data;
+}
+
+export async function getCategoriesPaginatedFromXata() {
+  const { userId } = auth();
+
+  const categories = await xata.db.purchase_categories
+    .select(["id", "categoryName", "moneyMovement"])
+    .getPaginated({
+      pagination: {
         size: 15,
       },
     });
 
   const data = JSON.parse(JSON.stringify(categories.records));
+  return data;
+}
+
+export async function getPurchaseFromXata() {
+  const { userId } = auth();
+  const purchases = await xata.db.purchases
+    .select(["id", "title", "amount", "purchaseDate", "category"])
+    .filter({
+      userId: userId || undefined,
+    })
+    .getPaginated({
+      pagination: {
+        size: 15,
+      },
+    });
+
+  const data = JSON.parse(JSON.stringify(purchases.records));
   return data;
 }
