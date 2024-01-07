@@ -12,9 +12,14 @@ export default async function page() {
     .filter({ userId: userId ?? undefined }) // Add this line to filter by userId
     .getPaginated({
       pagination: {
-        size: 15,
+        size: 25,
       },
     });
+
+  const purchases = userPage.records.map((record) => ({
+    ...record,
+    purchaseDate: record.purchaseDate?.toString() ?? "",
+  }));
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">
@@ -37,13 +42,13 @@ export default async function page() {
           </Link>
         </div>
       </div>
-      {userPage.records.length === 0 ? (
+      {purchases.length === 0 ? (
         <div className="bg-white-100 flex justify-center items-center flex-col">
           <>No purchase yet</>
         </div>
       ) : (
         <div className="container mx-auto mt-8">
-          <PurchasesTable purchases={userPage.records} />
+          <PurchasesTable purchases={purchases} />
         </div>
       )}
     </main>
