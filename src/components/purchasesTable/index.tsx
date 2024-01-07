@@ -27,7 +27,7 @@ const PurchasesTable: React.FC<Props> = ({ purchases }) => {
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
-        {purchases.map((purchase) => (
+        {purchases.reverse().map((purchase) => (
           <tr key={purchase.title}>
             <td className="px-6 py-4 whitespace-nowrap">
               <div className="text-sm text-gray-900">{purchase.title}</div>
