@@ -35,7 +35,7 @@ export async function createPurchase(formData: FormData) {
   redirect("/dashboard");
 }
 
-export async function getOptionFromXata() {
+export async function getOptionsFromXata() {
   const { userId } = auth();
 
   const categories = await xata.db.purchase_categories
@@ -65,10 +65,10 @@ export async function getCategoriesPaginatedFromXata() {
   return data;
 }
 
-export async function getPurchaseFromXata() {
+export async function getPurchasesFromXata() {
   const { userId } = auth();
   const purchases = await xata.db.purchases
-    .select(["id", "title", "amount", "purchaseDate", "category"])
+    .select(["id", "title", "amount", "category", "purchaseDate"])
     .filter({
       userId: userId || undefined,
     })
@@ -77,21 +77,9 @@ export async function getPurchaseFromXata() {
         size: 25,
       },
     });
-
   const data = JSON.parse(JSON.stringify(purchases.records));
-  // console.log("data", data);
-
   return data;
 }
-
-// const userPage = await xata.db.purchases
-// .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
-// .filter({ userId: userId ?? undefined })
-// .getPaginated({
-//   pagination: {
-//     size: 25,
-//   },
-// });
 
 export async function getUserPurchaseSum(userId: string) {
   const sumPurchase = await xata.db.purchases.aggregate({

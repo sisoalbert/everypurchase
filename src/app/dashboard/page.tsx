@@ -1,9 +1,9 @@
 import PurchasesTable from "@/components/purchasesTable";
-import { getPurchaseFromXata } from "@/lib/actions";
+import { getPurchasesFromXata } from "@/lib/actions";
 import Link from "next/link";
 
 export default async function page() {
-  const purchases = await getPurchaseFromXata();
+  const purchases = await getPurchasesFromXata();
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">

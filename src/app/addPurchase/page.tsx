@@ -1,8 +1,8 @@
 import AddPurchaseForm from "@/components/form";
-import { createPurchase, getOptionFromXata } from "@/lib/actions";
+import { createPurchase, getOptionsFromXata } from "@/lib/actions";
 
 async function page() {
-  const options = await getOptionFromXata();
+  const options = await getOptionsFromXata();
 
   return (
     <div className="container mx-auto mt-8">
