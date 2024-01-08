@@ -1,10 +1,12 @@
 import React from "react";
+import DeletePurchaseBtn from "../buttons/DeletePurchase";
 
 interface Purchase {
   title: string;
   amount: number;
   category: string;
   purchaseDate: string;
+  id: string;
 }
 
 interface Props {
@@ -29,6 +31,9 @@ const PurchasesTable: React.FC<Props> = ({ purchases }) => {
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Category
           </th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Options
+          </th>
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
@@ -51,6 +56,9 @@ const PurchasesTable: React.FC<Props> = ({ purchases }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
               <div className="text-sm text-gray-900">{purchase.category}</div>
+            </td>
+            <td className="px-6 py-4 whitespace-nowrap">
+              <DeletePurchaseBtn id={purchase.id} />
             </td>
           </tr>
         ))}

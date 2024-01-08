@@ -98,3 +98,8 @@ export async function getUserPurchaseSum(userId: string) {
   console.log(sumPurchase.aggs.sumPurchase);
   return sumPurchase.aggs.sumPurchase;
 }
+
+export async function deletePurchaseFromXata(id: string) {
+  await xata.db.purchases.delete(id);
+  revalidatePath("/dashboard");
+}
