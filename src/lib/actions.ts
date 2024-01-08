@@ -74,10 +74,39 @@ export async function getPurchaseFromXata() {
     })
     .getPaginated({
       pagination: {
-        size: 15,
+        size: 25,
       },
     });
 
   const data = JSON.parse(JSON.stringify(purchases.records));
+  // console.log("data", data);
+
   return data;
+}
+
+// const userPage = await xata.db.purchases
+// .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
+// .filter({ userId: userId ?? undefined })
+// .getPaginated({
+//   pagination: {
+//     size: 25,
+//   },
+// });
+
+export async function getUserPurchaseSum(userId: string) {
+  const sumPurchase = await xata.db.purchases.aggregate({
+    sumPurchase: {
+      sum: {
+        column: "amount",
+      },
+    },
+    // filter: {
+    //   userId: {
+    //     equals: userId ?? undefined,
+    //   },
+    // },
+  });
+
+  console.log(sumPurchase.aggs.sumPurchase);
+  return sumPurchase.aggs.sumPurchase;
 }

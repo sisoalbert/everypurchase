@@ -1,25 +1,9 @@
 import PurchasesTable from "@/components/purchasesTable";
-import { getXataClient } from "@/xata";
-import { auth } from "@clerk/nextjs";
+import { getPurchaseFromXata } from "@/lib/actions";
 import Link from "next/link";
-const xata = getXataClient();
 
 export default async function page() {
-  const { userId } = auth();
-
-  const userPage = await xata.db.purchases
-    .select(["id", "title", "amount", "category", "purchaseDate", "userId"])
-    .filter({ userId: userId ?? undefined }) // Add this line to filter by userId
-    .getPaginated({
-      pagination: {
-        size: 25,
-      },
-    });
-
-  const purchases = userPage.records.map((record) => ({
-    ...record,
-    purchaseDate: record.purchaseDate?.toString() ?? "",
-  }));
+  const purchases = await getPurchaseFromXata();
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">
@@ -42,6 +26,14 @@ export default async function page() {
           </Link>
         </div>
       </div>
+      <div className="container mx-auto mt-8">
+        <div className="max-w-md mx-auto border flex justify-center items-center border-gray-300 rounded-md">
+          <Link href="/categories">
+            <h3>{/* Sum: {sumPurchase.aggs.sumPurchase} */}</h3>
+          </Link>
+        </div>
+      </div>
+
       {purchases.length === 0 ? (
         <div className="bg-white-100 flex justify-center items-center flex-col">
           <>No purchase yet</>
