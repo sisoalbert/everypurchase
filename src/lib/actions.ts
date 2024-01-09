@@ -14,7 +14,6 @@ const schema = z.object({
 });
 
 const xata = getXataClient();
-const { userId } = auth();
 
 export async function createPurchase(formData: FormData) {
   const title = formData.get("title");
@@ -67,6 +66,7 @@ export async function getCategoriesPaginatedFromXata() {
 }
 
 export async function getPurchasesFromXata() {
+  const { userId } = auth();
   const purchases = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate"])
     .filter({
@@ -124,6 +124,8 @@ export async function updatePurchaseFromXata(id: string, formData: FormData) {
 
 // searchPurchasesFromXata
 export async function searchPurchasesFromXata(searchTerm: string) {
+  const { userId } = auth();
+
   // Generated with CLI
   const { records } = await xata.search.byTable(searchTerm, {
     tables: [
