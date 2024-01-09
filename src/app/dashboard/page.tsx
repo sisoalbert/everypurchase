@@ -1,9 +1,19 @@
 import PurchasesTable from "@/components/purchasesTable";
-import { getPurchasesFromXata } from "@/lib/actions";
+import SearchBar from "@/components/searchBar";
+import { getPurchasesFromXata, searchPurchasesFromXata } from "@/lib/actions";
 import Link from "next/link";
 
-export default async function page() {
-  const purchases = await getPurchasesFromXata();
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { q: string };
+}) {
+  let purchases = null;
+  if (searchParams.q) {
+    purchases = await searchPurchasesFromXata(searchParams.q);
+  } else {
+    purchases = await getPurchasesFromXata();
+  }
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">
@@ -28,14 +38,12 @@ export default async function page() {
       </div>
       <div className="container mx-auto mt-8">
         <div className="max-w-md mx-auto border flex justify-center items-center border-gray-300 rounded-md">
-          <Link href="/categories">
-            <h3>{/* Sum: {sumPurchase.aggs.sumPurchase} */}</h3>
-          </Link>
+          <SearchBar searchParams={searchParams} />
         </div>
       </div>
 
       {purchases.length === 0 ? (
-        <div className="bg-white-100 flex justify-center items-center flex-col">
+        <div className="bg-white-100 flex justify-center items-center flex-col ">
           <>No purchase yet</>
         </div>
       ) : (

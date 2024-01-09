@@ -14,6 +14,7 @@ const schema = z.object({
 });
 
 const xata = getXataClient();
+const { userId } = auth();
 
 export async function createPurchase(formData: FormData) {
   const title = formData.get("title");
@@ -66,7 +67,6 @@ export async function getCategoriesPaginatedFromXata() {
 }
 
 export async function getPurchasesFromXata() {
-  const { userId } = auth();
   const purchases = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate"])
     .filter({
@@ -102,4 +102,48 @@ export async function getUserPurchaseSum(userId: string) {
 export async function deletePurchaseFromXata(id: string) {
   await xata.db.purchases.delete(id);
   revalidatePath("/dashboard");
+}
+
+export async function updatePurchaseFromXata(id: string, formData: FormData) {
+  const title = formData.get("title");
+  const amount = Number(formData.get("amount"));
+  const date = formData.get("datetime");
+  const category = formData.get("category");
+  const purchaseDate = date ? new Date(date.toString()) : "";
+  const { userId } = auth();
+  const validatedFormData = schema.parse({
+    title,
+    amount,
+    purchaseDate,
+    category,
+    userId,
+  });
+  await xata.db.purchases.update(id, validatedFormData);
+  revalidatePath("/dashboard");
+}
+
+// searchPurchasesFromXata
+export async function searchPurchasesFromXata(searchTerm: string) {
+  // Generated with CLI
+  const { records } = await xata.search.byTable(searchTerm, {
+    tables: [
+      {
+        table: "purchases",
+        target: [
+          { column: "title" },
+          { column: "category" },
+          { column: "purchaseDate" },
+          { column: "amount" },
+        ],
+        filter: {
+          userId: userId || undefined,
+        },
+      },
+    ],
+    fuzziness: 0,
+    prefix: "phrase",
+  });
+
+  const data = JSON.parse(JSON.stringify(records.purchases));
+  return data;
 }
