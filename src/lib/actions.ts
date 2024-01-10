@@ -142,10 +142,15 @@ export async function searchPurchasesFromXata(searchTerm: string) {
         },
       },
     ],
-    fuzziness: 0,
+    fuzziness: 1,
     prefix: "phrase",
   });
 
+  if (!records.purchases) {
+    return [];
+  }
+
   const data = JSON.parse(JSON.stringify(records.purchases));
+
   return data;
 }
