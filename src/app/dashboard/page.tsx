@@ -1,3 +1,4 @@
+import AddPurchaseModal from "@/components/modal";
 import PurchasesTable from "@/components/purchasesTable";
 import SearchBar from "@/components/searchBar";
 import { getPurchasesFromXata, searchPurchasesFromXata } from "@/lib/actions";
@@ -51,6 +52,7 @@ export default async function page({
           <PurchasesTable purchases={purchases} />
         </div>
       )}
+      <AddPurchaseModal />
     </main>
   );
 }
