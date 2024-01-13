@@ -1,7 +1,12 @@
 import AddPurchaseModal from "@/components/modal";
 import PurchasesTable from "@/components/purchasesTable";
 import SearchBar from "@/components/searchBar";
-import { getPurchasesFromXata, searchPurchasesFromXata } from "@/lib/actions";
+import {
+  createPurchase,
+  getOptionsFromXata,
+  getPurchasesFromXata,
+  searchPurchasesFromXata,
+} from "@/lib/actions";
 import Link from "next/link";
 
 export default async function page({
@@ -15,6 +20,7 @@ export default async function page({
   } else {
     purchases = await getPurchasesFromXata();
   }
+  const options = await getOptionsFromXata();
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">
@@ -30,7 +36,7 @@ export default async function page({
               <h3 className="fw-bold red">Pricing</h3>
             </button>
           </Link>
-          <Link href="/addPurchase">
+          <Link href={`?modal=true`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2  mx-2 my-2 rounded">
               <h3 className="fw-bold red">Add purchase</h3>
             </button>
@@ -52,7 +58,7 @@ export default async function page({
           <PurchasesTable purchases={purchases} />
         </div>
       )}
-      <AddPurchaseModal />
+      <AddPurchaseModal formAction={createPurchase} categories={options} />
     </main>
   );
 }

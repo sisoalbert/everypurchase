@@ -3,19 +3,26 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import AddPurchaseForm from "../form";
+import { useRouter } from "next/navigation";
 
-export default function AddPurchaseModal() {
+export default function AddPurchaseModal({ formAction, categories }: any) {
   const cancelButtonRef = useRef(null);
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
   const searchParams = useSearchParams();
   const isModalOpen = searchParams.get("modal") === "true";
-  console.log("isModalOpen", isModalOpen);
 
   useEffect(() => {
     setOpen(isModalOpen);
   }, [isModalOpen]);
+
+  const handleClose = () => {
+    router.push(`?modal=false`);
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -24,7 +31,7 @@ export default function AddPurchaseModal() {
             as="div"
             className="relative z-10"
             initialFocus={cancelButtonRef}
-            onClose={setOpen}
+            onClose={handleClose}
           >
             <Transition.Child
               as={Fragment}
@@ -60,116 +67,19 @@ export default function AddPurchaseModal() {
                             Add a purchase{" "}
                           </Dialog.Title>
                           <div className="mt-2">
-                            <div>
-                              <form
-                                className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-md"
-                                // ref={ref}
-                                // action={(formData) => {
-                                //   formAction(formData);
-                                //   ref.current?.reset();
-                                // }}
-                              >
-                                <div className="mb-4">
-                                  <label
-                                    htmlFor="title"
-                                    className="block text-sm font-medium text-gray-600"
-                                  >
-                                    Title
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="title"
-                                    placeholder="Enter title"
-                                    name="title"
-                                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                                    required
-                                  />
-                                </div>
-                                <div className="mb-4">
-                                  <label
-                                    htmlFor="amount"
-                                    className="block text-sm font-medium text-gray-600"
-                                  >
-                                    Amount
-                                  </label>
-                                  <input
-                                    type="text"
-                                    id="amount"
-                                    name="amount"
-                                    placeholder="Enter amount"
-                                    pattern="[0-9]+(\.[0-9]+)?"
-                                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                                    required
-                                  />
-                                </div>
-                                <div className="mb-4">
-                                  <label
-                                    htmlFor="date"
-                                    className="block text-sm font-medium text-gray-600"
-                                  >
-                                    Date
-                                  </label>
-                                  <input
-                                    type="datetime-local"
-                                    id="datetime"
-                                    name="datetime"
-                                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                                    required
-                                  />
-                                </div>
-                                <div className="mb-4">
-                                  <label
-                                    htmlFor="category"
-                                    className="block text-sm font-medium text-gray-600"
-                                  >
-                                    Category
-                                  </label>
-                                  <select
-                                    id="category"
-                                    name="category"
-                                    className="mt-1 p-2 w-full border border-gray-300 rounded-md"
-                                    required
-                                  >
-                                    <option value="" disabled>
-                                      Select a category
-                                    </option>
-                                    {/* {categories.map((category) => (
-              <option key={category.id} value={category.categoryName}>
-                {category.categoryName}
-              </option>
-            ))} */}
-                                  </select>
-                                </div>
-                                <div className="mt-4">
-                                  <button
-                                    type="submit"
-                                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                                  >
-                                    Submit
-                                  </button>
-                                </div>
-                              </form>
-                            </div>
+                            <AddPurchaseForm
+                              formAction={formAction}
+                              categories={categories}
+                            />
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                      <button
-                        type="button"
-                        className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                        onClick={() => setOpen(false)}
-                      >
-                        Deactivate
-                      </button>
                       <Link href={`?modal=false`}>
                         <button
                           type="button"
                           className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                          onClick={() => {
-                            // setOpen(false);
-                            //   href = {`?modal=true` }
-                          }}
                           ref={cancelButtonRef}
                         >
                           Cancel
