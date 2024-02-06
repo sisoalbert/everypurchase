@@ -1,9 +1,14 @@
 "use client";
-import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
 const Header: React.FC = () => {
-  const { user, isLoaded } = useUser();
+  const isLoaded = true;
+
+  const user = {
+    fullName: "Siso",
+    imageUrl: "https://i.pravatar.cc/150?u=a042581f4e29026707d",
+    email: "k6yJQ@example.com",
+  };
 
   return (
     <header>
@@ -33,7 +38,7 @@ const Header: React.FC = () => {
 
           {isLoaded && user && (
             <>
-              <UserButton afterSignOutUrl="/" />
+              <p>Hello, {user.fullName}</p>
             </>
           )}
         </div>

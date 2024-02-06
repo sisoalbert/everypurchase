@@ -1,9 +1,8 @@
-import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export default function Home() {
-  const { userId } = auth();
+  const userId = 4569;
 
   if (userId) {
     redirect("/dashboard");

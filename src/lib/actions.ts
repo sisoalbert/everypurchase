@@ -1,6 +1,5 @@
 "use server";
 import { getXataClient } from "@/xata";
-import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -21,7 +20,7 @@ export async function createPurchase(formData: FormData) {
   const date = formData.get("datetime");
   const category = formData.get("category");
   const purchaseDate = date ? new Date(date.toString()) : "";
-  const { userId } = auth();
+  const userId = 123;
   const validatedFormData = schema.parse({
     title,
     amount,
@@ -36,7 +35,7 @@ export async function createPurchase(formData: FormData) {
 }
 
 export async function getOptionsFromXata() {
-  const { userId } = auth();
+  const userId = 123;
 
   const categories = await xata.db.purchase_categories
     .select(["id", "categoryName", "moneyMovement"])
@@ -51,7 +50,7 @@ export async function getOptionsFromXata() {
 }
 
 export async function getCategoriesPaginatedFromXata() {
-  const { userId } = auth();
+  const userId = 123;
 
   const categories = await xata.db.purchase_categories
     .select(["id", "categoryName", "moneyMovement"])
@@ -66,7 +65,7 @@ export async function getCategoriesPaginatedFromXata() {
 }
 
 export async function getPurchasesFromXata() {
-  const { userId } = auth();
+  const userId = 123;
   const purchases = await xata.db.purchases
     .select(["id", "title", "amount", "category", "purchaseDate"])
     .filter({
@@ -110,7 +109,7 @@ export async function updatePurchaseFromXata(id: string, formData: FormData) {
   const date = formData.get("datetime");
   const category = formData.get("category");
   const purchaseDate = date ? new Date(date.toString()) : "";
-  const { userId } = auth();
+  const userId = 123;
   const validatedFormData = schema.parse({
     title,
     amount,
@@ -124,7 +123,7 @@ export async function updatePurchaseFromXata(id: string, formData: FormData) {
 
 // searchPurchasesFromXata
 export async function searchPurchasesFromXata(searchTerm: string) {
-  const { userId } = auth();
+  const userId = 123;
 
   // Generated with CLI
   const { records } = await xata.search.byTable(searchTerm, {
