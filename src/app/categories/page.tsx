@@ -1,9 +1,8 @@
 import CategoriesTable from "@/components/categoriesTable";
-import { getOptionsFromXata } from "@/lib/actions";
 import React from "react";
 
 export default async function page() {
-  const options = await getOptionsFromXata();
+  const options = ["test", "test2"];
 
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">

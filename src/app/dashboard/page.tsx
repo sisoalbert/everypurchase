@@ -1,12 +1,6 @@
 import AddPurchaseModal from "@/components/modal";
 import PurchasesTable from "@/components/purchasesTable";
 import SearchBar from "@/components/searchBar";
-import {
-  createPurchase,
-  getOptionsFromXata,
-  getPurchasesFromXata,
-  searchPurchasesFromXata,
-} from "@/lib/actions";
 import Link from "next/link";
 
 export default async function page({
@@ -14,14 +8,7 @@ export default async function page({
 }: {
   searchParams: { q: string };
 }) {
-  let purchases = null;
-  if (searchParams.q) {
-    purchases = await searchPurchasesFromXata(searchParams.q);
-  } else {
-    purchases = await getPurchasesFromXata();
-  }
-  const options = await getOptionsFromXata();
-
+  const purchases = [];
   return (
     <main className="bg-white-100 flex justify-center items-center flex-col">
       <div className="container mx-auto mt-8">
@@ -58,7 +45,6 @@ export default async function page({
           <PurchasesTable purchases={purchases} />
         </div>
       )}
-      <AddPurchaseModal formAction={createPurchase} categories={options} />
     </main>
   );
 }
